@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>關鍵時刻評量 · Toastmasters</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root {
+    --burgundy: #8B1A2F;
+    --gold: #C8973A;
+    --gold-light: #E8C47A;
+    --cream: #FAF6EE;
+    --dark: #1A1208;
+    --mid: #5A4A30;
+    --border: #E0D4BB;
+    --surface: #FFF9F0;
+    --green: #2D6A4F;
+    --orange: #C45E1A;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(26,18,8,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', 'Noto Serif TC', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─────────────────────────────────── */
+  .app-header {
+    background: linear-gradient(135deg, var(--burgundy) 0%, #5A0E1F 100%);
+    padding: 28px 20px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .app-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(200,151,58,0.25);
+    border: 1px solid rgba(200,151,58,0.5);
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .app-header h1 {
+    font-family: 'Noto Serif TC', serif;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .app-header p {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* ─── PROGRESS BAR ────────────────────────────── */
+  .progress-wrap {
+    background: #fff;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--burgundy), var(--gold));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* ─── SCREENS ─────────────────────────────────── */
+  .screen { display: none; animation: fadeUp 0.35s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(16px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ─── WELCOME ─────────────────────────────────── */
+  #screen-welcome {
+    padding: 32px 20px 40px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .welcome-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--burgundy), #C0392B);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 28px;
+    box-shadow: 0 8px 24px rgba(139,26,47,0.3);
+  }
+  #screen-welcome h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 24px;
+    text-align: center;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  #screen-welcome p {
+    text-align: center;
+    color: var(--mid);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .input-group { margin-bottom: 20px; }
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-family: inherit;
+    background: #fff;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-group input:focus { border-color: var(--burgundy); }
+
+  /* ─── BUTTONS ──────────────────────────────────── */
+  .btn-primary {
+    display: block; width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--burgundy) 0%, #A0202E 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(139,26,47,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-primary:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(139,26,47,0.2); }
+
+  .btn-gold {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--gold) 0%, #A87628 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(200,151,58,0.35);
+    transition: transform 0.15s;
+  }
+  .btn-gold:active { transform: scale(0.97); }
+
+  .btn-outline {
+    display: block; width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--burgundy);
+    border: 2px solid var(--burgundy);
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 12px;
+  }
+  .btn-outline:active { background: rgba(139,26,47,0.06); }
+
+  /* ─── CATEGORY CARD ────────────────────────────── */
+  .category-header {
+    background: var(--burgundy);
+    padding: 20px 20px 16px;
+    position: relative;
+  }
+  .cat-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 4px;
+  }
+  .cat-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .cat-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+  }
+
+  .criteria-list {
+    padding: 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* ─── CRITERION ROW ────────────────────────────── */
+  .criterion {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .criterion-label {
+    padding: 14px 16px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border);
+  }
+  .score-row {
+    display: flex;
+    padding: 10px 12px 4px;
+    gap: 6px;
+  }
+  .score-btn {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .score-btn:active { transform: scale(0.93); }
+  .score-btn.s1.selected { background: #FDE8E8; border-color: #C0392B; color: #C0392B; }
+  .score-btn.s2.selected { background: #FDECD8; border-color: #E67E22; color: #E67E22; }
+  .score-btn.s3.selected { background: #FFF5D4; border-color: #D4AC0D; color: #A38A00; }
+  .score-btn.s4.selected { background: #D9F0E4; border-color: #27AE60; color: #1E8449; }
+  .score-btn.s5.selected { background: #C8E6C9; border-color: #1B5E20; color: #1B5E20; }
+
+  .score-legend {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 12px 10px;
+    font-size: 10px;
+    color: #aaa;
+    font-weight: 500;
+  }
+
+  .criterion.unanswered {
+    border-color: #C0392B;
+    box-shadow: 0 0 0 2px rgba(192,57,43,0.15);
+  }
+  .criterion.unanswered .criterion-label {
+    color: var(--burgundy);
+  }
+  .required-banner {
+    background: #FDE8E8; color: #C0392B;
+    font-size: 13px; font-weight: 600;
+    padding: 10px 16px; border-radius: 10px;
+    margin: 0 20px 12px;
+    max-width: 500px; margin-left: auto; margin-right: auto;
+    display: none; text-align: center;
+  }
+  .required-banner.visible { display: block; }
+
+  /* ─── NAV BUTTONS ──────────────────────────────── */
+  .nav-row {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px 32px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .btn-nav {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-prev {
+    background: #fff;
+    border: 2px solid var(--border);
+    color: var(--mid);
+  }
+  .btn-next {
+    background: linear-gradient(135deg, var(--burgundy), #A0202E);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(139,26,47,0.25);
+  }
+  .btn-nav:active { transform: scale(0.97); }
+
+  /* ─── RESULTS ──────────────────────────────────── */
+  #screen-result { padding: 0 0 60px; }
+
+  .result-header {
+    background: linear-gradient(135deg, var(--dark) 0%, #3A2510 100%);
+    padding: 28px 20px 24px;
+    text-align: center;
+  }
+  .result-header .club-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+  .result-header h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+  }
+  .result-header .timestamp {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 6px;
+  }
+
+  .total-score-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    margin: 16px 20px;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .total-ring {
+    width: 72px; height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: conic-gradient(var(--burgundy) var(--pct, 0%), var(--border) 0%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .total-ring::after {
+    content: '';
+    position: absolute;
+    width: 54px; height: 54px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .total-ring span {
+    position: relative; z-index: 1;
+    font-size: 17px; font-weight: 700;
+    color: var(--burgundy);
+  }
+  .total-text h3 {
+    font-size: 16px; font-weight: 700;
+    color: var(--dark);
+  }
+  .total-text p {
+    font-size: 12px; color: var(--mid);
+    margin-top: 3px; line-height: 1.5;
+  }
+
+  /* Category result rows */
+  .cat-results {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .cat-result-row {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .cat-result-top {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .cat-emoji { font-size: 22px; }
+  .cat-result-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .cat-score-badge {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .badge-high { background: #D9F0E4; color: #1E8449; }
+  .badge-mid  { background: #FFF5D4; color: #9A7D0A; }
+  .badge-low  { background: #FDE8E8; color: #C0392B; }
+  .cat-bar-wrap {
+    padding: 0 16px 14px;
+  }
+  .cat-bar-bg {
+    height: 8px; background: var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .cat-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s ease;
+  }
+  .bar-high { background: linear-gradient(90deg, #27AE60, #1E8449); }
+  .bar-mid  { background: linear-gradient(90deg, #F1C40F, #D4AC0D); }
+  .bar-low  { background: linear-gradient(90deg, #E74C3C, #C0392B); }
+
+  /* ─── STRATEGY TABLE ────────────────────────────── */
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    padding: 20px 20px 10px;
+    max-width: 540px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .strategy-card {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin: 0 20px 10px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .strategy-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .strategy-head .tag-alert {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+    background: #FDE8E8; color: #C0392B;
+  }
+  .strategy-head .tag-warn {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+    background: #FEF0DC; color: #C45E1A;
+  }
+  .strategy-head .tag-ok {
+    background: #D9F0E4; color: #1E8449;
+  }
+  .strategy-head h4 {
+    font-size: 14px; font-weight: 600; color: var(--dark);
+  }
+  .strategy-body { padding: 14px 16px; }
+  .strategy-item {
+    display: flex; gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px; line-height: 1.6; color: var(--mid);
+  }
+  .strategy-item:last-child { margin-bottom: 0; }
+  .strategy-dot {
+    width: 6px; height: 6px;
+    background: var(--gold); border-radius: 50%;
+    flex-shrink: 0; margin-top: 7px;
+  }
+
+  /* Strengths */
+  .strength-card {
+    background: linear-gradient(135deg, #F0FBF4, #E0F4E8);
+    border-radius: var(--radius);
+    border: 1px solid #A3D9B4;
+    padding: 16px;
+    margin: 0 20px 10px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .strength-card h4 {
+    font-size: 13px; font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .strength-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px; line-height: 1.6; color: #1E5F3F;
+  }
+  .strength-item:last-child { margin-bottom: 0; }
+  .strength-check { color: var(--green); font-size: 14px; flex-shrink: 0; }
+
+  /* ─── DISCUSSION BOXES ────────────────────── */
+  .disc-box {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin: 0 20px 12px;
+    max-width: 500px;
+    margin-left: auto; margin-right: auto;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
+  }
+  .disc-box.required-alert { border-color: #C0392B; }
+  .disc-q-label {
+    display: flex; gap: 8px; align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    font-size: 14px; font-weight: 600; color: var(--dark);
+    line-height: 1.5;
+  }
+  .disc-q-num {
+    background: var(--burgundy); color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 8px;
+    flex-shrink: 0; letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .disc-required-tag {
+    font-size: 10px; font-weight: 700; color: #C0392B;
+    background: #FDE8E8; padding: 2px 8px; border-radius: 10px;
+    flex-shrink: 0; align-self: center;
+  }
+  .disc-hint {
+    font-size: 12px; color: var(--mid);
+    background: #FFF9EE; border-left: 3px solid var(--gold);
+    padding: 8px 10px; border-radius: 6px;
+    margin-bottom: 14px; line-height: 1.6;
+  }
+
+  /* Bubble chips */
+  .bubble-wrap {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .bubble {
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 30px;
+    background: var(--surface);
+    font-size: 12px; font-weight: 500;
+    color: var(--mid);
+    cursor: pointer; font-family: inherit;
+    line-height: 1.4; text-align: left;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .bubble:active { transform: scale(0.96); }
+  .bubble.selected {
+    background: #FDE8E8; border-color: var(--burgundy);
+    color: var(--burgundy); font-weight: 600;
+  }
+  .selected-count {
+    font-size: 12px; color: var(--mid);
+    margin-top: 8px;
+    display: none;
+    align-items: center; gap: 6px;
+  }
+  .selected-count.visible { display: flex; }
+  .sc-badge {
+    background: var(--burgundy); color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 9px; border-radius: 20px;
+  }
+  .required-msg {
+    font-size: 12px; color: #C0392B; font-weight: 600;
+    margin-top: 8px; display: none;
+  }
+  .required-msg.visible { display: block; }
+
+  /* Action rows */
+  .action-row {
+    display: grid;
+    grid-template-columns: 0.9fr 2fr 0.7fr 28px;
+    gap: 6px;
+    margin-bottom: 8px;
+    align-items: start;
+  }
+  .action-row textarea {
+    width: 100%; padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px; font-family: inherit;
+    color: var(--dark); background: #fff;
+    outline: none; resize: none;
+    min-height: 60px; line-height: 1.5;
+    transition: border-color 0.2s;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+  }
+  .action-row textarea:focus { border-color: var(--burgundy); }
+  .action-row-labels {
+    display: grid;
+    grid-template-columns: 0.9fr 2fr 0.7fr 28px;
+    gap: 6px; margin-bottom: 4px;
+  }
+  .action-row-labels span {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--mid);
+    padding-left: 10px; /* aligns with textarea padding */
+    display: block;
+  }
+  .action-row-labels .lbl-spacer { /* placeholder for delete col */ }
+  .del-row-btn {
+    background: none; border: none;
+    color: #ccc; font-size: 20px; cursor: pointer;
+    padding: 0; width: 28px;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0; line-height: 1;
+    padding-top: 18px; /* vertically centre in row */
+  }
+  .del-row-btn:active { color: #C0392B; }
+  .add-row-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 14px;
+    background: none;
+    border: 1.5px dashed var(--border);
+    border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    color: var(--mid); font-family: inherit;
+    cursor: pointer; width: 100%; justify-content: center;
+    margin-top: 4px;
+    transition: border-color 0.2s, color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .add-row-btn:active { border-color: var(--gold); color: var(--gold); }
+
+  /* ─── BEST PRACTICE ACCORDION ─────────────── */
+  .bp-section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--mid);
+    padding: 4px 0 8px;
+    display: block;
+  }
+  .bp-group {
+    margin: 0 20px 10px;
+    max-width: 500px;
+    margin-left: auto; margin-right: auto;
+  }
+  .bp-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 8px;
+  }
+  .bp-trigger {
+    width: 100%; background: none; border: none;
+    padding: 0 16px;
+    height: 64px;
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer; text-align: left;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+  }
+  .bp-trigger:active { background: rgba(0,0,0,0.02); }
+  .bp-cat-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; padding: 4px 9px; border-radius: 20px;
+    background: #FEF0DC; color: #C45E1A; flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .bp-challenge-text {
+    flex: 1; font-size: 13px; font-weight: 600;
+    color: var(--dark); line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(5px); }
+  }
+  .bp-arrow {
+    font-size: 18px; color: var(--gold); flex-shrink: 0;
+    transition: transform 0.3s ease, color 0.2s;
+    animation: bounceDown 1.4s ease-in-out infinite;
+    line-height: 1;
+  }
+  .bp-item.open .bp-arrow {
+    transform: rotate(180deg);
+    animation: none;
+    color: var(--burgundy);
+  }
+  .bp-body {
+    display: none;
+    border-top: 2px solid var(--border);
+  }
+  .bp-item.open .bp-body { display: block; }
+
+  /* Body sections */
+  .bp-section { padding: 14px 16px; }
+  .bp-section.reason-section { background: #FFF9F5; }
+  .bp-section.suggest-section { background: #F4FBF6; border-top: 1px solid var(--border); }
+  .bp-section-head {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .bp-section-icon {
+    width: 22px; height: 22px; border-radius: 6px;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .bp-section-icon.r { background: #FDE8D0; color: #C45E1A; }
+  .bp-section-icon.s { background: #C8E6D4; color: #1E8449; }
+  .bp-section-title {
+    font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .bp-section-title.r { color: #C45E1A; }
+  .bp-section-title.s { color: #1E8449; }
+  .bp-entry {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 9px 12px; border-radius: 8px;
+    margin-bottom: 6px; font-size: 14px; line-height: 1.65; color: var(--dark);
+    border: 1px solid transparent;
+  }
+  .bp-entry:last-child { margin-bottom: 0; }
+  .bp-entry.r { background: #fff; border-color: #F5D5BE; }
+  .bp-entry.s { background: #fff; border-color: #B8E0C4; }
+  .bp-entry-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 8px;
+  }
+  .bp-entry.r .bp-entry-dot { background: #C45E1A; }
+  .bp-entry.s .bp-entry-dot { background: #27AE60; }
+
+  /* ─── DISCUSSION BOX ──────────────────────── */
+  .discussion-box {
+    background: linear-gradient(135deg, #1A1208, #3A2510);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    margin: 0 20px 16px;
+    max-width: 500px;
+    margin-left: auto; margin-right: auto;
+  }
+  .discussion-box h4 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--gold-light); margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .discussion-q {
+    display: flex; gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.88);
+  }
+  .discussion-q:last-child { margin-bottom: 0; }
+  .q-num {
+    font-size: 16px; font-weight: 700;
+    color: var(--gold); flex-shrink: 0; line-height: 1.4;
+  }
+
+  /* Download zone */
+  .download-zone {
+    padding: 16px 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* ─── CAPTURE CARD (hidden, for export) ───────── */
+  #capture-card {
+    position: fixed;
+    left: -9999px;
+    top: 0;
+    width: 390px;
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
+  .cc-header {
+    background: linear-gradient(135deg, var(--burgundy), #5A0E1F);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .cc-header .badge-sm {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold-light);
+    background: rgba(200,151,58,0.2); border: 1px solid rgba(200,151,58,0.4);
+    padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 8px;
+  }
+  .cc-header .cc-club { font-family: 'Noto Serif TC',serif; font-size: 20px; color:#fff; font-weight:700; }
+  .cc-header .cc-sub { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .cc-body { padding: 16px; }
+  .cc-row {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 12px 14px; margin-bottom: 8px;
+  }
+  .cc-row-icon { font-size: 18px; }
+  .cc-row-name { flex:1; font-size: 13px; font-weight: 600; color: var(--dark); }
+  .cc-row-score { font-size: 13px; font-weight: 700; }
+  .cc-bar-bg { height: 6px; background: var(--border); border-radius: 10px; margin-top: 6px; overflow: hidden; }
+  .cc-bar-fill { height: 100%; border-radius: 10px; }
+  .cc-total {
+    background: var(--dark); color: #fff;
+    padding: 14px 16px; border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px;
+  }
+  .cc-total-label { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .cc-total-val { font-size: 20px; font-weight: 700; color: var(--gold-light); }
+  .cc-footer { text-align: center; padding: 10px 16px 16px; font-size: 10px; color: #aaa; }
+
+  /* ─── TOAST NOTIFICATION ─────────────────────── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--dark); color: #fff;
+    padding: 12px 20px; border-radius: 30px;
+    font-size: 13px; font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── LOADING STATE ──────────────────────────── */
+  .loading-spinner {
+    display: inline-block; width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="app-header">
+  <div class="header-badge">Toastmasters International</div>
+  <h1>關鍵時刻評量</h1>
+  <p>Moments of Truth · 分會健康度評估</p>
+</div>
+
+<!-- ══════════ PROGRESS BAR ══════════ -->
+<div class="progress-wrap" id="progress-wrap" style="display:none">
+  <div class="progress-meta">
+    <span id="progress-label">第 1 類 / 共 6 類</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 0 — WELCOME
+══════════════════════════════════════════════ -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome-icon">🏆</div>
+  <h2>歡迎使用評量工具</h2>
+  <p>此工具根據 Toastmasters《關鍵時刻》標準，協助分會了解現況並找出改進優先項目。</p>
+  <div class="input-group">
+    <label>分會名稱</label>
+    <input type="text" id="club-name-input" placeholder="例：台北菁英分會" maxlength="30">
+  </div>
+  <button class="btn-primary" onclick="startAssessment()">開始評量 →</button>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCREENS 1–6 — CATEGORIES (generated by JS)
+══════════════════════════════════════════════ -->
+<div id="screens-container"></div>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN RESULT
+══════════════════════════════════════════════ -->
+<div class="screen" id="screen-result"></div>
+
+<!-- ══════════ CAPTURE CARD (export only) ══════════ -->
+<div id="capture-card"></div>
+
+<!-- ══════════ TOAST ══════════ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const CATEGORIES = [
+  {
+    id: 'first-impression',
+    emoji: '👋',
+    title: '第一印象',
+    desc: '來賓會根據正面良好的經驗，決定是否再訪並成為會員。',
+    criteria: [
+      '熱情迎接來賓並介紹給幹部與會員認識',
+      '協助來賓在簽到簿留下資料並提供名牌',
+      '專業化佈置的例會場地',
+      '便利的例會地點',
+      '邀請來賓發言',
+      '邀請來賓加入會員',
+    ]
+  },
+  {
+    id: 'new-member',
+    emoji: '🌱',
+    title: '新會員訓練',
+    desc: '協助新會員熟悉教育與認證計畫，以及分會與會員彼此的責任。',
+    criteria: [
+      '正式入會儀式，包括頒發會員別針及手冊',
+      '為新會員分配導師',
+      '討論教育計畫與認證系統',
+      '評估新會員學習需求',
+      '滿足殘障人士的特殊需求',
+      '指派例會任務',
+      '會員參與分會所有層面的活動',
+    ]
+  },
+  {
+    id: 'fellowship',
+    emoji: '🤝',
+    title: '會員情誼、多樣化及良好溝通',
+    desc: '營造有趣、友善、相互支持的環境，增進學習樂趣以留住會員。',
+    criteria: [
+      '熱情接待來賓，並使其感到受歡迎',
+      '規劃愉快富教育意義的例會',
+      '定期舉辦社交活動',
+      '鼓勵會員參加區、地區總會及國際總會舉辦的活動',
+      '鼓勵參與分會交流活動',
+      '定期發布並更新會訊／網站內容',
+    ]
+  },
+  {
+    id: 'program',
+    emoji: '📋',
+    title: '活動安排及例會籌劃',
+    desc: '精心策劃例會，讓每位講者充分準備並獲得有益的講評。',
+    criteria: [
+      '提前公布活動內容及議程表',
+      '會員對活動職責了然於胸，同時對所有任務準備充分',
+      '所有演講單元都依照 Toastmasters Pathways 教育課程進行',
+      '例會應準時開始與結束',
+      '提供有創意的 Table Topics® 題目與活動',
+      '給予正面且有助益的講評',
+    ]
+  },
+  {
+    id: 'membership',
+    emoji: '👥',
+    title: '會員人數',
+    desc: '足夠的人數讓領導團隊、例會與委員會任務都有人擔綱。',
+    criteria: [
+      '分會至少有 20 名會員',
+      '會員願意繼續留在分會',
+      '在社區或分會所在機構推廣分會',
+      '多樣化且吸引人的分會活動',
+      '表揚招募並引進新會員的會友們',
+      '定期舉辦會員招募活動',
+    ]
+  },
+  {
+    id: 'achievement',
+    emoji: '🏅',
+    title: '成就認證',
+    desc: '關注會員達成目標進度，成就達成後立刻完成申請並公開表揚。',
+    criteria: [
+      '成就達成後，立刻將申請文件送交世界總會',
+      '定期更新會員成就達成進度，並於例會中公布',
+      '以正式儀式表揚會員成就',
+      '讓會員認識分會、地區總會與世界總會領袖',
+      '公開表揚分會及會員成就',
+      '依據「傑出分會計畫」（DCP）來做規劃與認證',
+    ]
+  }
+];
+
+// 最佳對策表 — 原文逐字照錄（依 PDF 分類）
+// 每個 entry: { challenge, reasons: [...], suggestions: [...] }
+const BEST_PRACTICES = [
+  {
+    catLabel: '來賓',
+    entries: [
+      {
+        challenge: '沒有來賓到訪。來賓無意入會。',
+        reasons: [
+          '來賓可能感到不受歡迎。他們與太過緊密聯繫的團體成員交往時，這些「新朋友」往往感到無法融入其中。',
+          '來賓傾向加入能在實現自身目標過程，給予充分支持的分會。',
+          '來賓可能在第一次參加例會後，沒有被邀請入會。',
+          '來賓可能見到令人心生觀感不佳或負面的互動。',
+        ],
+        suggestions: [
+          '會員副會長（VPM）應邀請訪客於「簽到簿」留下資料，並在例會結束時邀請訪客入會。',
+          '確定每位來賓都有名牌。',
+          '在分會網站提供服裝規定，讓訪客能夠因為穿著合宜而感到自在。',
+          '在來賓來到會場時給予熱烈歡迎，此外向會員介紹來賓時，應以個人資訊為佳，而不是頭銜。',
+          '讓例會友善、好玩、有趣！多多嘗試主題例會，並且讓 Table Topics™ 更多元。',
+          '公開展示進度表，讓會員清楚了解目標達成進度。',
+          '以 Toastmasters 旗幟或雜誌作為擺設，來吸引來賓造訪。',
+          '利用分會官網、會訊或社群媒體來推廣例會。',
+          '頒發「溝通成就」獎項給社區中，非演講會員的社會賢達。',
+          '舉辦「演講訓練營課程」。',
+        ],
+      },
+    ],
+  },
+  {
+    catLabel: '講評',
+    entries: [
+      {
+        challenge: '演講者對於有建設性的回應極度敏感。講評內容過於膚淺，同時也沒有達到效果。講評並未提供具建設性的回饋。',
+        reasons: [
+          '若要得到懇切、表達支持的講評，必須先在團體內建立相互信任關係。',
+          '講評者可能不清楚如何有效表達講評內容。',
+        ],
+        suggestions: [
+          '教育副會長（VPE）應只指派至少發表過五次演講的會員擔任講評者。',
+          '講評內容聚焦在手冊所列的演講目標。',
+          '邀請會內或是鄰近分會的資深演講會會友來示範如何做有效的講評。',
+          '規劃分會社交活動，來營造友善、相互支持的分會文化。',
+        ],
+      },
+    ],
+  },
+  {
+    catLabel: '會員留存',
+    entries: [
+      {
+        challenge: '會員不再參與。會員不再續籍。會員對 Toastmasters 及所屬分會有負面觀感。',
+        reasons: [
+          '分會內沒有建立正式的導師制度。',
+          '會員可能對導師制度一無所知，遑論它所帶來的益處。',
+          '受指導者與導師間無法配合。',
+          '會員可能對是否能達成目標，感到迷惘。',
+          '會員可能覺得並未獲得足夠支援。',
+          '例會並未準時開始或結束。',
+        ],
+        suggestions: [
+          '善用教育副會長（VPE）及正式的導師制度，來確保每位會員都積極參與。',
+          '會員副會長（VPM）應聯繫缺席或生病的會員，透過電話或問候卡片來表達關心與思念。',
+          '例會開始或結束務必準時，表達對與會者的尊重。',
+          '利用「會員興趣調查」讓會員分享各自的目標與需求。',
+          '無論成就大小，均要公開表揚。',
+        ],
+      },
+    ],
+  },
+  {
+    catLabel: '指導',
+    entries: [
+      {
+        challenge: '會員對「導師制度」不滿意。會員並未充分利用「導師制度」。會員無意願擔任導師。',
+        reasons: [
+          '導師並未給受指導者足夠支持。',
+          '導師對自身責任了解不足。',
+        ],
+        suggestions: [
+          '強調導師制度對新會員的重要性。',
+          '定期觀察導師與受指導者間的互動，來評估效果。',
+          '鼓勵在各個教育層級施行導師制度，而不光侷限於協助新會員。',
+          '讓會員明白更換導師人選其實很平常，任何人都不應該有「非他／她不可」的堅持。',
+          '建立導師與受指導者間的回饋制度，來強化責任。',
+          '將導師的責任向導師與受指導者說明清楚。',
+        ],
+      },
+    ],
+  },
+  {
+    catLabel: '會員成就',
+    entries: [
+      {
+        challenge: '會員沒有贏得獎項。演講者沒有進步。',
+        reasons: [
+          '會員並未依照 Toastmasters 的教育課程來發表演講。',
+          '會員達成成就時，並未在分會內獲得表揚。',
+        ],
+        suggestions: [
+          '藉由一個儀式或是頒發緞帶來表揚初次演講者。',
+          '頒發紀念品來慶祝會員成就。',
+          '請資深會員分享他們達成職涯與 Toastmasters 里程碑的成功故事。',
+          '務必在新進會員訓練時，詳實解釋成就與認證的相關內容，並再三強調其重要性。',
+          '教育副會長（VPE）應確保會員依照 Toastmasters 的教育課程來發表演講。',
+        ],
+      },
+    ],
+  },
+];
+
+// Per-criterion strength descriptions (parallel index to CATEGORIES[x].criteria)
+const CRITERION_STRENGTHS = {
+  'first-impression': [
+    '每位來賓都被主動迎接並認識幹部，第一步就建立了真實的人際連結',
+    '簽到流程順暢、名牌齊備，來賓從踏進門的那刻就感到被重視',
+    '例會場地佈置專業、有 Toastmasters 識別感，讓人感受到分會的認真態度',
+    '例會地點方便，降低來賓出席的門檻，是穩定人流的隱形優勢',
+    '來賓在例會中有機會發言，不只是旁觀者，早早體驗到 TM 的核心價值',
+    '例會結束前主動邀請入會，把握黃金時機，轉化率遠高於被動等待',
+  ],
+  'new-member': [
+    '正式的入會儀式讓新會員感受到被歡迎、被珍視，有效提升初期的歸屬感',
+    '導師制度落實到位，新會員有人帶、有方向，流失風險顯著降低',
+    '新會員清楚了解 Pathways 課程，起步不迷茫，成就達成速度更快',
+    '入會時就評估個別需求，讓每位會員走適合自己的路，而非一套打天下',
+    '特殊需求被主動照顧，體現分會的包容文化，也符合 TM 多元精神',
+    '新會員很快就上手例會任務，參與感強、融入快，這是留住人的關鍵前三個月',
+    '新會員不只參與演講，還投入委員會與活動，深度融入讓續籍率更高',
+  ],
+  'fellowship': [
+    '來賓感到受歡迎，代表分會文化是開放的，而非只有老成員的小圈子',
+    '例會兼具教育性與趣味性，會員願意每次出席，而非把例會當義務',
+    '定期社交活動讓會員關係不只停留在例會，情誼更深、流失率更低',
+    '鼓勵會員參加跨級活動，讓眼界超出分會，對 TM 組織的認同感更強',
+    '積極參與分會交流，帶回不同風格與想法，是分會持續進化的養分',
+    '會訊與社群內容定期更新，缺席的會員仍能保持連結，降低斷線式流失',
+  ],
+  'program': [
+    '議程提前公布，職責人員有充分準備時間，例會質量直接提升',
+    '每位職責人員都清楚自己的任務並做足準備，例會執行力強，不靠臨時應變',
+    '演講都對應 Pathways 專案，會員真的在累積成就，而非只是「上台說話」',
+    '例會準時開始與結束，尊重每個人的時間，是分會紀律的最直接展現',
+    'Table Topics® 題目有創意，讓即興演講成為例會亮點，而非走流程的環節',
+    '講評具體有建設性，演講者真的因此進步，這正是 TM 最核心的學習機制',
+  ],
+  'membership': [
+    '會員人數達 20 人以上，職務輪替充裕、例會角色不缺人，形成正向循環',
+    '會員主動留下來、持續續籍，說明分會提供的價值是真實且被感受到的',
+    '分會在社區或機構中有能見度，品牌認知度是招募的長期資產',
+    '活動多樣且吸引人，不同背景的會員都能找到參與的理由，擴大了受眾面',
+    '招募貢獻者獲得公開表揚，讓招募成為分會文化的一部分，而非少數人的責任',
+    '定期舉辦招募活動，讓人流補充有節奏、不靠偶發，會員基數穩定成長',
+  ],
+  'achievement': [
+    '成就申請即時送交，會員努力的成果被迅速認可，激勵效果最大化',
+    '進度在例會中定期公布，讓每位會員都知道自己和別人的位置，形成正向競爭',
+    '成就表揚有儀式感，讓達標成為值得記憶的時刻，也激勵其他人跟進',
+    '會員認識各層領袖，對 TM 組織有更深的認同，也更願意向上發展',
+    '分會成就對外可見，既激勵現有會員，也是對潛在新會員最有力的招募展示',
+    '以 DCP 為規劃基準，幹部有共同語言與目標，執行力與方向感都更強',
+  ],
+};
+
+/* ════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let clubName = '';
+let currentScreen = 0; // 0 = welcome, 1-6 = cats, 7 = result
+let scores = {}; // { 'cat-id': [1,3,5,...] }
+const TOTAL_SCREENS = CATEGORIES.length + 2; // welcome + 6 cats + result
+
+/* ════════════════════════════════════════
+   BUILD CATEGORY SCREENS
+═══════════════════════════════════════════ */
+function buildScreens() {
+  const container = document.getElementById('screens-container');
+  container.innerHTML = '';
+  CATEGORIES.forEach((cat, i) => {
+    const screenDiv = document.createElement('div');
+    screenDiv.className = 'screen';
+    screenDiv.id = `screen-cat-${i}`;
+
+    let criteriaHTML = cat.criteria.map((crit, ci) => `
+      <div class="criterion" id="crit-${cat.id}-${ci}">
+        <div class="criterion-label">${crit}</div>
+        <div class="score-row">
+          ${[1,2,3,4,5].map(n => `
+            <button class="score-btn s${n}" onclick="setScore('${cat.id}',${ci},${n},this)">${n}</button>
+          `).join('')}
+        </div>
+        <div class="score-legend">
+          <span>從未符合</span><span>總是符合</span>
+        </div>
+      </div>
+    `).join('');
+
+    screenDiv.innerHTML = `
+      <div class="category-header">
+        <div class="cat-number">第 ${i+1} 類 / 共 ${CATEGORIES.length} 類</div>
+        <div class="cat-title">${cat.emoji} ${cat.title}</div>
+        <div class="cat-desc">${cat.desc}</div>
+      </div>
+      <div id="req-banner-${i}" class="required-banner">⚠ 請為所有項目評分後再繼續</div>
+      <div class="criteria-list">${criteriaHTML}</div>
+      <div class="nav-row">
+        <button class="btn-nav btn-prev" onclick="navigate(${i})">← 上一步</button>
+        <button class="btn-nav btn-next" id="next-btn-${i}" onclick="tryNavigate(${i}, ${i+2})">
+          ${i === CATEGORIES.length-1 ? '查看結果 →' : '下一類 →'}
+        </button>
+      </div>
+    `;
+    container.appendChild(screenDiv);
+  });
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function startAssessment() {
+  const inp = document.getElementById('club-name-input').value.trim();
+  if (!inp) {
+    document.getElementById('club-name-input').focus();
+    showToast('請先輸入分會名稱 😊');
+    return;
+  }
+  clubName = inp;
+  // Init scores
+  CATEGORIES.forEach(cat => {
+    scores[cat.id] = new Array(cat.criteria.length).fill(null);
+  });
+  buildScreens();
+  showScreen('screen-cat-0');
+  document.getElementById('progress-wrap').style.display = 'block';
+  updateProgress(1);
+}
+
+function tryNavigate(catScreenIdx, target) {
+  // catScreenIdx is the 0-based category index currently shown
+  const cat = CATEGORIES[catScreenIdx];
+  if (!cat) { navigate(target); return; }
+
+  const catScores = scores[cat.id];
+  const unscored = catScores.map((v, i) => i).filter(i => catScores[i] === null);
+
+  if (unscored.length > 0) {
+    // Highlight unanswered items
+    unscored.forEach(i => {
+      const el = document.getElementById(`crit-${cat.id}-${i}`);
+      if (el) el.classList.add('unanswered');
+    });
+    const banner = document.getElementById(`req-banner-${catScreenIdx}`);
+    if (banner) {
+      banner.classList.add('visible');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    showToast(`還有 ${unscored.length} 題尚未評分`);
+    return;
+  }
+  navigate(target);
+}
+
+function navigate(target) {
+  // target: 0=welcome, 1-6=cat index, 7=result
+  if (target === 0) {
+    showScreen('screen-welcome');
+    document.getElementById('progress-wrap').style.display = 'none';
+    return;
+  }
+  if (target === CATEGORIES.length + 1) {
+    // Going to results
+    buildResults();
+    showScreen('screen-result');
+    updateProgress(CATEGORIES.length + 1);
+    window.scrollTo(0,0);
+    return;
+  }
+  showScreen(`screen-cat-${target-1}`);
+  updateProgress(target);
+  window.scrollTo(0,0);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updateProgress(catNum) {
+  const pct = Math.round(((catNum - 1) / CATEGORIES.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent =
+    catNum > CATEGORIES.length ? '評量完成' : `第 ${catNum} 類 / 共 ${CATEGORIES.length} 類`;
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+/* ════════════════════════════════════════
+   SCORING
+═══════════════════════════════════════════ */
+function setScore(catId, critIndex, value, btn) {
+  scores[catId][critIndex] = value;
+  const row = btn.closest('.score-row');
+  row.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  // Clear unanswered highlight on this criterion
+  const critEl = document.getElementById(`crit-${catId}-${critIndex}`);
+  if (critEl) critEl.classList.remove('unanswered');
+  // If all answered, hide the banner
+  const cat = CATEGORIES.find(c => c.id === catId);
+  if (cat) {
+    const catIdx = CATEGORIES.indexOf(cat);
+    const allAnswered = scores[catId].every(v => v !== null);
+    if (allAnswered) {
+      const banner = document.getElementById(`req-banner-${catIdx}`);
+      if (banner) banner.classList.remove('visible');
+    }
+  }
+}
+
+function getCatAvg(catId) {
+  const arr = scores[catId].filter(v => v !== null);
+  if (!arr.length) return 0;
+  return arr.reduce((a,b) => a+b, 0) / arr.length;
+}
+
+function getTotalAvg() {
+  let all = [];
+  CATEGORIES.forEach(cat => {
+    scores[cat.id].filter(v => v !== null).forEach(v => all.push(v));
+  });
+  if (!all.length) return 0;
+  return all.reduce((a,b) => a+b, 0) / all.length;
+}
+
+function scoreLabel(avg) {
+  if (avg >= 4)   return { text: '優秀', cls: 'badge-high', bar: 'bar-high' };
+  if (avg >= 2.5) return { text: '待加強', cls: 'badge-mid',  bar: 'bar-mid'  };
+  return               { text: '需關注', cls: 'badge-low',  bar: 'bar-low'  };
+}
+
+/* ════════════════════════════════════════
+   BUILD RESULTS
+═══════════════════════════════════════════ */
+function buildResults() {
+  const total = getTotalAvg();
+  const pct = Math.round((total / 5) * 100);
+  const now = new Date().toLocaleString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+
+  // (strong/weak logic handled inline below)
+
+  // Cat result rows
+  const catRowsHTML = CATEGORIES.map(cat => {
+    const avg = getCatAvg(cat.id);
+    const disp = avg ? avg.toFixed(1) : 'N/A';
+    const pctBar = avg ? Math.round((avg/5)*100) : 0;
+    const lbl = scoreLabel(avg);
+    return `
+      <div class="cat-result-row">
+        <div class="cat-result-top">
+          <span class="cat-emoji">${cat.emoji}</span>
+          <span class="cat-result-name">${cat.title}</span>
+          <span class="cat-score-badge ${lbl.cls}">${disp} / 5</span>
+        </div>
+        <div class="cat-bar-wrap">
+          <div class="cat-bar-bg">
+            <div class="cat-bar-fill ${lbl.bar}" style="width:${pctBar}%"></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Best Practice accordion — all entries from BEST_PRACTICES, always shown
+  let strategyHTML = '';
+  let strategyCount = BEST_PRACTICES.length;
+
+  BEST_PRACTICES.forEach((group, gi) => {
+    group.entries.forEach((entry, ei) => {
+      const uid = `bp-${gi}-${ei}`;
+      const reasonsHTML = entry.reasons.map(r => `
+        <div class="bp-entry r">
+          <span class="bp-entry-dot"></span>
+          <span>${r}</span>
+        </div>`).join('');
+      const suggestHTML = entry.suggestions.map(s => `
+        <div class="bp-entry s">
+          <span class="bp-entry-dot"></span>
+          <span>${s}</span>
+        </div>`).join('');
+
+      strategyHTML += `
+        <div class="bp-group">
+          <div class="bp-item" id="${uid}">
+            <button class="bp-trigger" onclick="toggleBP('${uid}')">
+              <span class="bp-cat-tag">${group.catLabel}</span>
+              <span class="bp-challenge-text">${entry.challenge}</span>
+              <span class="bp-arrow">▼</span>
+            </button>
+            <div class="bp-body">
+              <div class="bp-section reason-section">
+                <div class="bp-section-head">
+                  <span class="bp-section-icon r">？</span>
+                  <span class="bp-section-title r">可能的原因</span>
+                </div>
+                ${reasonsHTML}
+              </div>
+              <div class="bp-section suggest-section">
+                <div class="bp-section-head">
+                  <span class="bp-section-icon s">✓</span>
+                  <span class="bp-section-title s">建議做法</span>
+                </div>
+                ${suggestHTML}
+              </div>
+            </div>
+          </div>
+        </div>`;
+    });
+  });
+
+  // Discussion section — built as static HTML, interactions wired after innerHTML set
+  const allChallenges = BEST_PRACTICES.flatMap((group, gi) =>
+    group.entries.map((entry, ei) => ({
+      uid: `bp-${gi}-${ei}`,
+      catLabel: group.catLabel,
+      challenge: entry.challenge,
+    }))
+  );
+
+  const bubblesHTML = allChallenges.map((c, idx) => `
+    <button class="bubble" id="bubble-${idx}" onclick="toggleBubble(${idx})">${c.catLabel}：${c.challenge}</button>
+  `).join('');
+
+  const discussionHTML = `
+    <span class="section-title" style="margin-top:4px;">💬 團隊討論</span>
+
+    <div class="disc-box" id="disc-q1">
+      <div class="disc-q-label">
+        <span class="disc-q-num">Q1</span>
+        <span>遇到挑戰的原因為何？</span>
+        <span class="disc-required-tag">必選</span>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-bottom:12px;line-height:1.6;">
+        請選出你們認為符合的項目（可複選）
+      </div>
+      <div class="bubble-wrap" id="bubble-wrap">
+        ${bubblesHTML}
+      </div>
+      <div class="selected-count" id="selected-count">
+        已選 <span class="sc-badge" id="sel-num">0</span> 個挑戰項目
+      </div>
+      <div class="required-msg" id="required-msg">⚠ 請至少選取一個挑戰項目</div>
+    </div>
+
+    <div class="disc-box" id="disc-q2">
+      <div class="disc-q-label">
+        <span class="disc-q-num">Q2</span>
+        <span>該如何因應？誰應擔負起行動的責任？</span>
+        <span class="disc-required-tag">必填</span>
+      </div>
+      <div class="disc-hint">對應上方選取的挑戰填寫。可往下展開最佳策略表參考建議。</div>
+      <div id="action-rows"></div>
+      <button class="add-row-btn" onclick="addActionRow()">＋ 新增行動項目</button>
+    </div>
+  `;
+
+  // Accordion — always shown below
+  // (strategyHTML already built above)
+
+  // Strengths — top 3 by category avg ≥ 4, else fall back to top 3 individual criteria ≥ 4
+  let strengthHTML = '';
+
+  // Try: categories with avg ≥ 4, pick top 3
+  const strongCatsFull = [...CATEGORIES]
+    .map(c => ({ ...c, avg: getCatAvg(c.id) }))
+    .filter(c => c.avg >= 4)
+    .sort((a, b) => b.avg - a.avg)
+    .slice(0, 3);
+
+  if (strongCatsFull.length > 0) {
+    const items = strongCatsFull.map(cat => {
+      // Find the single highest-scored criterion in that category to anchor the description
+      const catStrs = CRITERION_STRENGTHS[cat.id] || [];
+      const bestIdx = scores[cat.id].reduce((bi, sc, i) =>
+        (sc !== null && (bi === -1 || sc > scores[cat.id][bi])) ? i : bi, -1);
+      const desc = bestIdx >= 0 && catStrs[bestIdx]
+        ? catStrs[bestIdx]
+        : `整體表現均衡優秀（均分 ${cat.avg.toFixed(1)}）`;
+      return `
+        <div class="strength-item">
+          <span class="strength-check">✓</span>
+          <div>
+            <strong>${cat.emoji} ${cat.title}</strong>
+            <span style="font-size:11px;font-weight:700;color:#1E8449;background:#C8E6C9;
+              padding:2px 7px;border-radius:10px;margin-left:6px;">${cat.avg.toFixed(1)} 分</span>
+            <div style="font-size:13px;color:#1E5F3F;margin-top:4px;line-height:1.6;">${desc}</div>
+          </div>
+        </div>`;
+    }).join('');
+    strengthHTML = `<div class="strength-card"><h4>✦ 分會優勢項目</h4>${items}</div>`;
+
+  } else {
+    // Fallback: pick top 3 individual criteria with score ≥ 4 across all categories
+    let allCriteria = [];
+    CATEGORIES.forEach(cat => {
+      const catStrs = CRITERION_STRENGTHS[cat.id] || [];
+      scores[cat.id].forEach((sc, i) => {
+        if (sc !== null && sc >= 4) {
+          allCriteria.push({
+            catEmoji: cat.emoji, catTitle: cat.title,
+            crit: cat.criteria[i], sc,
+            desc: catStrs[i] || ''
+          });
+        }
+      });
+    });
+    allCriteria.sort((a, b) => b.sc - a.sc);
+    const top3 = allCriteria.slice(0, 3);
+
+    if (top3.length > 0) {
+      const items = top3.map(x => `
+        <div class="strength-item">
+          <span class="strength-check">✓</span>
+          <div>
+            <strong>${x.catEmoji} ${x.crit}</strong>
+            <span style="font-size:11px;font-weight:700;color:#1E8449;background:#C8E6C9;
+              padding:2px 7px;border-radius:10px;margin-left:6px;">${x.sc} 分</span>
+            <div style="font-size:12px;color:#888;margin-top:1px;">${x.catTitle}</div>
+            <div style="font-size:13px;color:#1E5F3F;margin-top:4px;line-height:1.6;">${x.desc}</div>
+          </div>
+        </div>`).join('');
+      strengthHTML = `<div class="strength-card"><h4>✦ 分會相對優勢（單項）</h4>${items}</div>`;
+    }
+  }
+
+  const totalLabel = scoreLabel(total);
+
+  document.getElementById('screen-result').innerHTML = `
+    <div class="result-header">
+      <div class="club-name">${clubName}</div>
+      <h2>關鍵時刻評量結果</h2>
+      <div class="timestamp">${now}</div>
+    </div>
+
+    <div class="total-score-wrap">
+      <div class="total-ring" style="--pct:${pct}%">
+        <span>${total.toFixed(1)}</span>
+      </div>
+      <div class="total-text">
+        <h3>整體平均分數 ${total.toFixed(1)} / 5</h3>
+        <p>${getOverallComment(total)}</p>
+      </div>
+    </div>
+
+    <div class="cat-results">${catRowsHTML}</div>
+
+    ${discussionHTML}
+
+    ${strategyCount > 0 ? `<span class="section-title" style="margin-top:4px;">🔍 最佳對策表<span style="font-size:11px;font-weight:400;color:var(--mid);margin-left:8px;">點選展開原文</span></span>` : ''}
+    ${strategyHTML}
+
+    ${strengthHTML ? `<span class="section-title">💪 分會優勢項目</span>` : ''}
+    ${strengthHTML}
+
+    <div class="download-zone">
+      <button class="btn-gold" onclick="downloadResult()">
+        <span>⬇</span> 下載評量結果圖片
+      </button>
+      <button class="btn-outline" style="max-width:160px; margin-top:0;" onclick="restartAssessment()">重新評量</button>
+    </div>
+  `;
+
+  // Reset discussion state and init
+  selectedBubbles = new Set();
+  actionRowCount = 0;
+
+  setTimeout(() => {
+    const ring = document.querySelector('.total-ring');
+    if (ring) ring.style.setProperty('--pct', pct + '%');
+    // Start with 1 blank action row
+    addActionRow(false);
+  }, 100);
+}
+
+function getOverallComment(avg) {
+  if (avg >= 4.5) return '分會各面向均表現卓越，繼續保持領導力！';
+  if (avg >= 3.5) return '整體表現良好，針對弱項集中資源改善。';
+  if (avg >= 2.5) return '有數個面向需要幹部重點關注與行動。';
+  return '建議立即召開幹部會議，制定 90 天改善計畫。';
+}
+
+function toggleBP(uid) {
+  const item = document.getElementById(uid);
+  if (item) item.classList.toggle('open');
+}
+
+// ── Discussion Q1: bubble selection ──────────────
+let selectedBubbles = new Set();
+
+function toggleBubble(idx) {
+  const btn = document.getElementById(`bubble-${idx}`);
+  if (!btn) return;
+  if (selectedBubbles.has(idx)) {
+    selectedBubbles.delete(idx);
+    btn.classList.remove('selected');
+  } else {
+    selectedBubbles.add(idx);
+    btn.classList.add('selected');
+  }
+  const countEl = document.getElementById('selected-count');
+  const numEl   = document.getElementById('sel-num');
+  const reqMsg  = document.getElementById('required-msg');
+  const q1box   = document.getElementById('disc-q1');
+  if (numEl)   numEl.textContent = selectedBubbles.size;
+  if (countEl) countEl.classList.toggle('visible', selectedBubbles.size > 0);
+  if (reqMsg)  reqMsg.classList.toggle('visible', false);
+  if (q1box)   q1box.classList.toggle('required-alert', false);
+  syncActionRows();
+}
+
+// ── Discussion Q2: action rows ───────────────────
+let actionRowCount = 0;
+
+function syncActionRows() {
+  const target = Math.max(1, selectedBubbles.size);
+  while (actionRowCount < target) addActionRow(false);
+}
+
+function addActionRow(manual = true) {
+  actionRowCount++;
+  const id = `arow-${actionRowCount}`;
+  const wrap = document.getElementById('action-rows');
+  if (!wrap) return;
+
+  // Labels row (only once, above all rows)
+  if (!document.getElementById('action-row-labels')) {
+    const labelsDiv = document.createElement('div');
+    labelsDiv.className = 'action-row-labels';
+    labelsDiv.id = 'action-row-labels';
+    labelsDiv.innerHTML = `
+      <span>Who</span>
+      <span>Will do what</span>
+      <span>By when</span>
+      <span class="lbl-spacer"></span>
+    `;
+    wrap.before(labelsDiv);
+  }
+
+  const row = document.createElement('div');
+  row.className = 'action-row';
+  row.id = id;
+  row.innerHTML = `
+    <textarea placeholder="負責人" oninput="autoResize(this)"></textarea>
+    <textarea placeholder="行動內容（可參考下方最佳策略表）" oninput="autoResize(this)"></textarea>
+    <textarea placeholder="期限" oninput="autoResize(this)"></textarea>
+  `;
+  const delBtn = document.createElement('button');
+  delBtn.className = 'del-row-btn';
+  delBtn.textContent = '×';
+  delBtn.title = '刪除';
+  delBtn.onclick = () => removeActionRow(id);
+  row.appendChild(delBtn);
+  wrap.appendChild(row);
+}
+
+function removeActionRow(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+  actionRowCount = document.querySelectorAll('.action-row').length;
+  // Remove labels if no rows left
+  if (actionRowCount === 0) {
+    const lbl = document.getElementById('action-row-labels');
+    if (lbl) lbl.remove();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function restartAssessment() {
+  scores = {};
+  clubName = '';
+  document.getElementById('club-name-input').value = '';
+  showScreen('screen-welcome');
+  document.getElementById('progress-wrap').style.display = 'none';
+}
+
+/* ════════════════════════════════════════
+   DOWNLOAD AS IMAGE
+═══════════════════════════════════════════ */
+async function downloadResult() {
+  const btn = document.querySelector('.btn-gold');
+  btn.innerHTML = `<span class="loading-spinner"></span> 生成中...`;
+  btn.disabled = true;
+
+  const now = new Date().toLocaleString('zh-TW', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+  const total = getTotalAvg();
+
+  // Cat score rows
+  const catRows = CATEGORIES.map(cat => {
+    const avg = getCatAvg(cat.id);
+    const pctBar = avg ? Math.round((avg/5)*100) : 0;
+    const lbl = scoreLabel(avg);
+    const color = lbl.cls === 'badge-high' ? '#27AE60' : lbl.cls === 'badge-mid' ? '#D4AC0D' : '#C0392B';
+    return `
+      <div class="cc-row">
+        <span class="cc-row-icon">${cat.emoji}</span>
+        <div style="flex:1">
+          <div class="cc-row-name">${cat.title}</div>
+          <div class="cc-bar-bg"><div class="cc-bar-fill" style="width:${pctBar}%;background:${color}"></div></div>
+        </div>
+        <span class="cc-row-score" style="color:${color}">${avg ? avg.toFixed(1) : 'N/A'}</span>
+      </div>`;
+  }).join('');
+
+  // Collect selected bubbles
+  const allChallengesList = BEST_PRACTICES.flatMap((group, gi) =>
+    group.entries.map((entry, ei) => ({ catLabel: group.catLabel, challenge: entry.challenge }))
+  );
+  const selectedChallengesHTML = selectedBubbles.size > 0 ? `
+    <div style="margin-top:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#C45E1A;margin-bottom:6px;">Q1 — 挑戰項目</div>
+      ${[...selectedBubbles].map(idx => {
+        const c = allChallengesList[idx];
+        return `<div style="display:inline-block;background:#FDE8E8;border:1px solid #C0392B;border-radius:20px;
+          font-size:11px;color:#8B1A2F;font-weight:600;padding:3px 9px;margin:2px 3px 2px 0;">${c ? c.catLabel + '：' + c.challenge.slice(0,30) + '…' : ''}</div>`;
+      }).join('')}
+    </div>` : '';
+
+  // Collect action rows
+  const actionRowEls = document.querySelectorAll('.action-row');
+  const actionRowsData = [...actionRowEls].map(row => {
+    const areas = row.querySelectorAll('textarea');
+    return { who: areas[0]?.value || '', what: areas[1]?.value || '', when: areas[2]?.value || '' };
+  }).filter(r => r.who || r.what || r.when);
+
+  const actionRowsHTML = actionRowsData.length > 0 ? `
+    <div style="margin-top:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#1A1208;margin-bottom:8px;">Q2 — 行動計畫</div>
+      <div style="display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:4px;margin-bottom:4px;">
+        <div style="font-size:9px;font-weight:700;color:#888;text-transform:uppercase;">Who</div>
+        <div style="font-size:9px;font-weight:700;color:#888;text-transform:uppercase;">Will do what</div>
+        <div style="font-size:9px;font-weight:700;color:#888;text-transform:uppercase;">By when</div>
+      </div>
+      ${actionRowsData.map(r => `
+        <div style="display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:4px;margin-bottom:6px;
+          background:#FFFBF5;border:1px solid #E0D4BB;border-radius:8px;padding:8px 10px;">
+          <div style="font-size:12px;color:#1A1208;line-height:1.5;">${r.who || '—'}</div>
+          <div style="font-size:12px;color:#1A1208;line-height:1.5;">${r.what || '—'}</div>
+          <div style="font-size:12px;color:#1A1208;line-height:1.5;">${r.when || '—'}</div>
+        </div>`).join('')}
+    </div>` : '';
+
+  // Discussion questions block
+  const discussionBlock = `
+    <div style="background:#1A1208;border-radius:10px;padding:12px 14px;margin-top:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#E8C47A;margin-bottom:8px;">原文討論問題</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.88);line-height:1.6;margin-bottom:4px;">
+        <span style="color:#C8973A;font-weight:700;">1．</span>遇到挑戰的原因為何？
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.88);line-height:1.6;">
+        <span style="color:#C8973A;font-weight:700;">2．</span>該如何因應？ 誰應擔負起行動的責任？
+      </div>
+    </div>`;
+
+  document.getElementById('capture-card').innerHTML = `
+    <div class="cc-header">
+      <div class="badge-sm">Moments of Truth · 關鍵時刻評量</div>
+      <div class="cc-club">${clubName}</div>
+      <div class="cc-sub">${now}</div>
+    </div>
+    <div class="cc-body">
+      <div class="cc-total">
+        <span class="cc-total-label">整體平均分數</span>
+        <span class="cc-total-val">${total.toFixed(1)} / 5</span>
+      </div>
+      ${catRows}
+      ${selectedChallengesHTML}
+      ${actionRowsHTML}
+      ${discussionBlock}
+      <div class="cc-footer">Toastmasters International · The Successful Club Series</div>
+    </div>
+  `;
+
+  const card = document.getElementById('capture-card');
+  card.style.left = '-9999px';
+  card.style.top = '0';
+
+  await new Promise(r => setTimeout(r, 300));
+
+  try {
+    const canvas = await html2canvas(card, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#FAF6EE',
+      width: 390,
+      logging: false,
+    });
+    const link = document.createElement('a');
+    link.download = `${clubName}_關鍵時刻評量_${now.replace(/[/:]/g,'').replace(' ','_')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('✓ 圖片已下載！');
+  } catch(e) {
+    showToast('下載失敗，請截圖儲存');
+  }
+
+  btn.innerHTML = `<span>⬇</span> 下載評量結果圖片`;
+  btn.disabled = false;
+}
+
+/* ════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
